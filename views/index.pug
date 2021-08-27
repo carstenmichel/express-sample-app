@@ -2,6 +2,9 @@ extends layout
 
 block content
   h1= title
-  p Welcome to Carsten #{title}
+  p Welcome to the Jungle! #{title}
   p This is a Node Application that has been containerized with Docker!
   p this runs with odo
+  p A change to the repo triggers a Tekton build
+  p and the kustomize manifest goes to a gitops repo
+  p and now with ArgoCD
