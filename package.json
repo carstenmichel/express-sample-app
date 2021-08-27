@@ -13,6 +13,7 @@
     "express-pino-logger": "^6.0.0",
     "http-errors": "~1.8.0",
     "morgan": "~1.10.0",
+    "pg": "^8.7.1",
     "pug": "^3.0.2"
   },
   "devDependencies": {
