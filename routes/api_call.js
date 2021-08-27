@@ -8,6 +8,8 @@ router.get('/', function(req, res, next) {
   var dbuser
   var dbpass
   var dbname
+  var content = "<HTML><BODY>";
+
   try {
     dbname = fs.readFileSync('/etc/postgres-secret/database-name', 'utf8')
     dbuser = fs.readFileSync('/etc/postgres-secret/database-user', 'utf8')
@@ -29,7 +31,7 @@ router.get('/', function(req, res, next) {
   content = content + '<p>' + client.database + '</p>\n'
 
 
-  var content = "<HTML><BODY>";
+
   client.connect()
   content = content +'<p>FILMS</p>\n'
   client.query('SELECT * from films;', (err, response) => {
