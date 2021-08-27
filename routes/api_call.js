@@ -37,21 +37,16 @@ router.get('/', function(req, res, next) {
   content = content +'<p>FILMS</p>\n'
   const text = 'SELECT * from films'
 
- /* client.query('SELECT * from films', (err, response) => {
-    content = content + '<div>' + response +'</div>\n'
-    content = content + '<div>' + err +'</div>\n'
 
-    client.end()
-  })*/
-  try {
-    const films = await client.query(text)
+
+  client
+  .query(text)
+  .then(films => {
     films.rows.forEach(row => {
       content = content + '<div>' + row +'</div>\n'
     });
-  } catch (err) {
-    content = content + '<div>' + err.stack +'</div>\n'
-
-  }
+  })
+  .catch(err => content = content + '<div>' + err.stack +'</div>\n')
 
 
   content = content + "</BODY></HTML>";
