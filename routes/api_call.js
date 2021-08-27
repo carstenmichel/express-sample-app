@@ -2,21 +2,19 @@ var express = require('express');
 var router = express.Router();
 var fs = require('fs')
 const { Pool, Client } = require('pg')
-var await = require('await')
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   var dbuser
   var dbpass
   var dbname
-  var content = "<HTML><BODY>";
 
   try {
     dbname = fs.readFileSync('/etc/postgres-secret/database-name', 'utf8')
     dbuser = fs.readFileSync('/etc/postgres-secret/database-user', 'utf8')
     dbpass = fs.readFileSync('/etc/postgres-secret/database-password', 'utf8')
   } catch (err) {
-    content = '<p>file not found</p>\n'
+    res.send(err.stack)
   }
   const client = new Client({
     user: dbuser,
@@ -26,32 +24,21 @@ router.get('/', function(req, res, next) {
     port: process.env['POSTGRESQL_SERVICE_PORT'],
   })
 
-  content = content + '<p>' + client.host + '</p>\n'
-  content = content + '<p>' + client.user + '</p>\n'
-  content = content + '<p>' + client.port + '</p>\n'
-  content = content + '<p>' + client.database + '</p>\n'
-
-
-
   client.connect()
-  content = content +'<p>FILMS</p>\n'
   const text = 'SELECT * from films'
-
-
 
   client
   .query(text)
   .then(films => {
     films.rows.forEach(row => {
+      var content = "<HTML><BODY>";
+      content = content +'<p>FILMS</p>\n'
       content = content + '<div>' + row +'</div>\n'
+      content = content + '</BODY></HTML>'
+      res.send(content)
     });
   })
-  .catch(err => content = content + '<div>' + err.stack +'</div>\n')
-
-
-  content = content + "</BODY></HTML>";
-  res.send(content);
-
+  .catch(err => res.send('<div>' + err.stack +'</div>\n'))
 });
 
 module.exports = router;
