@@ -18,10 +18,10 @@ router.get('/', function(req, res, next) {
   }
   const client = new Client({
     user: dbuser,
-    host: process.env.POSTGRESQL_SERVICE_HOST,
+    host: process.env['POSTGRESQL_SERVICE_HOST'],
     database: dbname,
     password: dbpass,
-    port: POSTGRESQL_SERVICE_PORT,
+    port: process.env['POSTGRESQL_SERVICE_PORT'],
   })
 
 
