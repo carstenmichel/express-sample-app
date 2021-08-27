@@ -1,3 +1,6 @@
 node_modules/
 .idea/
 manifests.yaml
+
+.odo/env
+.odo/odo-file-index.json
