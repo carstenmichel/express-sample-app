@@ -12,7 +12,6 @@ router.get('/', function(req, res, next) {
     dbname = fs.readFileSync('/etc/postgres-secret/database-name', 'utf8')
     dbuser = fs.readFileSync('/etc/postgres-secret/database-user', 'utf8')
     dbpass = fs.readFileSync('/etc/postgres-secret/database-password', 'utf8')
-    content = content + '<p>' +data +'</p>\n'
   } catch (err) {
     content = '<p>file not found</p>\n'
   }
