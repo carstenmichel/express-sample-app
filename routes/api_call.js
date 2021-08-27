@@ -34,7 +34,7 @@ router.get('/', function (req, res, next) {
       content = content + '<p>FILMS</p>\n'
       // films.rows.forEach(row => {
 
-      content = content + '<div>' + films.rows[0] + '</div>\n'
+      content = content + '<div>' + JSON.stringify(films.rows) + '</div>\n'
 
       // }
       content = content + '</BODY></HTML>'
