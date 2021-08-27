@@ -39,6 +39,9 @@ spec:
             successThreshold: 1
             timeoutSeconds: 1
           name: express-sample-app
+          volumeMounts:
+            - mountPath: /etc/postgres-secret
+              name: postgres
           ports:
             - containerPort: 3000
               name: http
