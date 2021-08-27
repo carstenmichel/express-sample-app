@@ -25,7 +25,7 @@ router.get('/', function (req, res, next) {
   })
 
   client.connect()
-  const text = 'SELECT * from films'
+  const text = 'SELECT NOW() as now'
 
   client
     .query(text)
