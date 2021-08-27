@@ -23,6 +23,11 @@ router.get('/', function(req, res, next) {
     port: process.env['POSTGRESQL_SERVICE_PORT'],
   })
 
+  content = content + '<p>' + client.host + '</p>\n'
+  content = content + '<p>' + client.user + '</p>\n'
+  content = content + '<p>' + client.port + '</p>\n'
+  content = content + '<p>' + client.database + '</p>\n'
+
 
   var content = "<HTML><BODY>";
   client.connect()
