@@ -27,6 +27,7 @@ router.get('/', function(req, res, next) {
 
   var content = "<HTML><BODY>";
   client.connect()
+  content = content +'<p>FILMS</p>\n'
   client.query('SELECT * from films;', (err, response) => {
     content = content + response
     client.end()
