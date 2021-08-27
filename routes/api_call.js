@@ -1,16 +1,38 @@
 var express = require('express');
 var router = express.Router();
 var fs = require('fs')
+const { Pool, Client } = require('pg')
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  var content = "<HTML><BODY>";
+  var dbuser
+  var dbpass
+  var dbname
   try {
-    const data = fs.readFileSync('/etc/postgres-secret', 'utf8')
+    dbname = fs.readFileSync('/etc/postgres-secret/database-name', 'utf8')
+    dbuser = fs.readFileSync('/etc/postgres-secret/database-user', 'utf8')
+    dbpass = fs.readFileSync('/etc/postgres-secret/database-password', 'utf8')
     content = content + '<p>' +data +'</p>\n'
   } catch (err) {
     content = '<p>file not found</p>\n'
   }
+  const client = new Client({
+    user: dbuser,
+    host: process.env.POSTGRESQL_SERVICE_HOST,
+    database: dbname,
+    password: dbpass,
+    port: POSTGRESQL_SERVICE_PORT,
+  })
+
+
+  var content = "<HTML><BODY>";
+  client.connect()
+  client.query('SELECT * from films;', (err, response) => {
+    content = content + response
+    client.end()
+  })
+
+
   content = content + "</BODY></HTML>";
   res.send(content);
 
