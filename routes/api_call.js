@@ -4,7 +4,7 @@ var fs = require('fs')
 const { Pool, Client } = require('pg')
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
   var dbuser
   var dbpass
   var dbname
@@ -28,17 +28,19 @@ router.get('/', function(req, res, next) {
   const text = 'SELECT * from films'
 
   client
-  .query(text)
-  .then(films => {
-    films.rows.forEach(row => {
+    .query(text)
+    .then(films => {
       var content = "<HTML><BODY>";
-      content = content +'<p>FILMS</p>\n'
-      content = content + '<div>' + row +'</div>\n'
+      content = content + '<p>FILMS</p>\n'
+      // films.rows.forEach(row => {
+
+      content = content + '<div>' + films.row[0] + '</div>\n'
+
+      // }
       content = content + '</BODY></HTML>'
       res.send(content)
-    });
-  })
-  .catch(err => res.send('<div>' + err.stack +'</div>\n'))
+    })
+    .catch(err => res.send('<div>' + err.stack + '</div>\n'))
 });
 
 module.exports = router;
